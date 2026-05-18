@@ -3,17 +3,14 @@ const W = 88,
   H = 50;
 const CHARS = " .`'^-~:;=!*#$%&@";
 const LUM_THRESHOLD = 0.72;
-
 let rX = 0.5,
   rY = 0.3,
   rZ = 0;
 let breath = 0;
 let rafId = null;
-
 let targetRX = 0.5,
   targetRY = 0.3;
 const ease = 0.065;
-
 const cfg = {
   R1: 0.55,
   R2: 3.2,
@@ -23,10 +20,14 @@ const cfg = {
   sx: 1,
   sy: 1,
 };
-
 const TARGET_FPS = 60;
 const FRAME_INTERVAL = 1000 / TARGET_FPS;
 let lastTime = 0;
+
+// Respect prefers-reduced-motion
+const prefersReducedMotion = window.matchMedia(
+  "(prefers-reduced-motion: reduce)",
+).matches;
 
 function updateTarget(clientX, clientY) {
   const cx = (clientX / window.innerWidth) * 2 - 1;
@@ -64,7 +65,6 @@ function render() {
   breath += 0.04;
   const scale = 1 + Math.sin(breath) * 0.03;
   const twistRate = cfg.twistBase + Math.sin(breath * 1.5) * 0.4;
-
   const L = { x: 0.35, y: 0.75, z: -0.6 };
   const K1 = 40,
     K2 = 7;
@@ -93,7 +93,6 @@ function render() {
     const ci = Math.cos(i),
       si = Math.sin(i);
     const R2_local = cfg.R2 + cfg.nodeAmp * Math.cos(cfg.nodeFreq * i);
-
     for (let j = 0; j < 6.28; j += step) {
       const cj = Math.cos(j),
         sj = Math.sin(j);
@@ -137,7 +136,6 @@ function render() {
   for (let k = 0; k < W * H; k++) {
     const isLineBreak = k % W === W - 1;
     const char = isLineBreak ? "\n" : buf[k];
-
     if (!isLineBreak && lBuf[k] > LUM_THRESHOLD) {
       outArr[k] = `<span class="hl">${char}</span>`;
     } else {
@@ -154,12 +152,16 @@ function loop(timestamp) {
   render();
 }
 
-requestAnimationFrame(loop);
-
-document.addEventListener("visibilitychange", () => {
-  if (document.hidden) cancelAnimationFrame(rafId);
-  else {
-    lastTime = performance.now();
-    rafId = requestAnimationFrame(loop);
-  }
-});
+if (!prefersReducedMotion) {
+  requestAnimationFrame(loop);
+  document.addEventListener("visibilitychange", () => {
+    if (document.hidden) cancelAnimationFrame(rafId);
+    else {
+      lastTime = performance.now();
+      rafId = requestAnimationFrame(loop);
+    }
+  });
+} else {
+  // Fallback static frame for reduced motion
+  render();
+}

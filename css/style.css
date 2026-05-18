@@ -1,7 +1,7 @@
 :root {
-  --bg: #ce6033;
-  --text: #fdfff6;
-  --glow: rgba(253, 255, 246, 0.25);
+  --bg: #b8502a;
+  --text: #ffffff;
+  --glow: rgba(255, 255, 255, 0.25);
   --size: 11px;
   --space-sm: 1rem;
   --space-md: 1.5rem;
@@ -26,9 +26,9 @@ html,
 body {
   background: var(--bg);
   color: var(--text);
-  max-width: 100vw;
-  overflow-x: hidden;
   font-family: system-ui, sans-serif;
+  scroll-behavior: smooth;
+  overflow-x: hidden;
 }
 
 a {
@@ -36,14 +36,20 @@ a {
   color: var(--text);
 }
 
+a:focus-visible,
+button:focus-visible {
+  outline: 2px solid var(--text);
+  outline-offset: 2px;
+}
+
 main {
   margin: 0 var(--space-lg);
   max-width: 100%;
-  overflow-x: hidden;
 }
 
 main section {
-  min-height: 100vh;
+  min-height: 100dvh;
+  height: auto;
 }
 
 pre {
@@ -60,7 +66,7 @@ pre {
 
 .hl {
   color: #ffffff;
-  text-shadow: 0 0 10px rgba(253, 255, 246, 0.65);
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.65);
 }
 
 main header {
@@ -76,45 +82,40 @@ main header {
   pointer-events: none;
 }
 
-main header ul li a {
-  pointer-events: auto;
-  touch-action: manipulation;
-  -webkit-tap-highlight-color: transparent;
-}
-
-main header.scrolled ul li a {
-  color: #ffffff;
-}
-
 main header ul {
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
   gap: 0.5rem;
   align-items: center;
+  list-style: none;
 }
 
 main header ul li {
-  list-style: none;
   font-size: clamp(2rem, 7vw, 6.438rem);
   font-family: var(--font-display);
   font-weight: 400;
-  font-style: normal;
-  line-height: 1;
   flex: 0 0 auto;
 }
 
 main header ul li a {
+  pointer-events: auto;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
   position: relative;
   display: inline-block;
   transition: transform 0.25s ease;
+}
+
+main header.scrolled ul li a {
+  color: #ffffff;
 }
 
 main header ul li a.active {
   font-family: "Tiny5", monospace;
   font-size: clamp(2.5rem, 8vw, 7rem);
   color: #ffffff;
-  text-shadow: 0 0 clamp(8px, 1.5vw, 12px) rgba(253, 255, 246, 0.65);
+  text-shadow: 0 0 clamp(8px, 1.5vw, 12px) rgba(255, 255, 255, 0.65);
   animation: fontSwitch 0.25s ease forwards;
 }
 
@@ -131,7 +132,6 @@ main section p.home-about {
   font-size: clamp(1rem, 2.5vw, 1.5rem);
   font-family: var(--font-body);
   font-weight: 300;
-  font-style: normal;
   position: absolute;
   padding-right: var(--space-lg);
   bottom: 2.2rem;
@@ -163,7 +163,6 @@ section div.work-showcase img {
   will-change: transform;
   flex-shrink: 0;
 }
-
 .work-showcase img.visible {
   display: block;
 }
@@ -191,7 +190,6 @@ section .accordion {
 section .accordion:first-of-type {
   border-top: 0.15rem solid var(--text);
 }
-
 section .accordion:hover {
   background-color: var(--text);
   color: var(--bg);
@@ -201,12 +199,10 @@ section .accordion div.project-subtitle {
   display: flex;
   font-family: var(--font-mono);
   font-weight: 400;
-  font-style: normal;
   text-wrap: nowrap;
   text-align: left;
   font-size: 1.5rem;
 }
-
 section .accordion div.project-subtitle div {
   padding-right: 3rem;
 }
@@ -215,15 +211,12 @@ section .accordion div.project-title {
   text-wrap: wrap;
   min-width: 0;
 }
-
 section .accordion div.project-title p {
   font-size: clamp(38px, 3.6vw, 53.2px);
   font-family: var(--font-display);
   font-weight: 400;
   line-height: 1;
-  white-space: nowrap;
-  overflow: visible;
-  text-overflow: clip;
+  white-space: normal; /* Fixed overflow contradiction */
   letter-spacing: -0.02em;
   display: block;
   width: 100%;
@@ -235,7 +228,6 @@ section .accordion div.project-title p {
 section div.panel {
   max-height: 0;
   overflow: hidden;
-  overflow-x: hidden;
   transition: max-height 0.8s cubic-bezier(0.4, 0, 0.2, 1);
   border-bottom: var(--text) solid 0.15rem;
   width: 100%;
@@ -250,37 +242,32 @@ section div.panel div.grid {
   padding: 0 var(--space-md) var(--space-md) var(--space-md);
   max-width: 100%;
 }
-
 section div.panel div.grid p {
   font-family: var(--font-body);
   font-weight: 300;
-  font-style: normal;
   font-size: clamp(1rem, 1.5vw, 1.3rem);
   line-height: 1.4;
   padding-right: 0;
   margin-bottom: 0;
 }
-
 section div.panel div.grid div.img-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: var(--space-md);
   width: 100%;
 }
-
 section div.panel div.grid div.img-grid .bottom-img {
   grid-column: span 2;
   width: 100%;
   margin-top: 0;
 }
-
-section div.panel div.grid div.img-grid img {
+section div.panel div.grid div.img-grid img,
+section div.panel div.img-grid-2 img {
   width: 100%;
   max-width: 100%;
   height: auto;
   display: block;
   object-fit: contain;
-  aspect-ratio: auto;
 }
 
 section div.panel div.img-grid-2 {
@@ -293,34 +280,17 @@ section div.panel div.img-grid-2 {
   margin-right: auto;
   padding: 0 var(--space-md) 2.5rem;
 }
-
 section div.panel div.img-grid-2 > img {
   grid-column: span 2;
-  width: 100%;
-  height: auto;
-  display: block;
-  object-fit: contain;
-  aspect-ratio: auto;
 }
-
 section div.panel div.img-grid-2 .img-flex {
   display: contents;
 }
 
-section div.panel div.img-grid-2 img {
-  width: 100%;
-  max-width: 100%;
-  height: auto;
-  display: block;
-  object-fit: contain;
-  aspect-ratio: auto;
-}
-
 #Info {
   display: flex;
-  height: 100vh;
-  min-height: 100vh;
-  overflow-x: hidden;
+  height: auto;
+  min-height: 100dvh;
   contain: layout style paint;
 }
 
@@ -345,22 +315,18 @@ section.content div.info-contact {
   padding: 0;
   width: 100%;
 }
-
 section.content div.info-contact p {
   font-family: var(--font-body);
   font-weight: 300;
-  font-style: normal;
   font-size: clamp(1rem, 1.7vw, 1.5rem);
   margin-bottom: 1rem;
 }
-
 section.content div.info-contact ul {
   display: flex;
   flex-wrap: wrap;
   list-style: none;
   font-family: var(--font-mono);
   font-weight: 400;
-  font-style: normal;
   font-size: 1.5rem;
   justify-content: space-between;
 }
@@ -383,13 +349,11 @@ section.content div.info-contact ul {
   z-index: 9998;
   letter-spacing: 0.05em;
 }
-
 .project-back-to-top.visible {
   opacity: 1;
   visibility: visible;
   transform: translateY(0);
 }
-
 .project-back-to-top:hover {
   background: var(--bg);
   color: var(--text);
@@ -400,72 +364,46 @@ section.content div.info-contact ul {
     min-height: auto;
     height: auto;
   }
-
   main section:first-of-type {
-    min-height: 100vh;
+    min-height: 100dvh;
   }
-
   main {
     margin: 0 var(--space-lg);
   }
-
   main header {
     margin: 1.5rem 2.4rem 0 2.3rem;
   }
-
   main header ul li {
     font-size: clamp(2.5rem, 5vw, 5rem);
   }
-
   main header ul li a.active {
     font-size: clamp(3rem, 6vw, 6rem);
   }
-
   main section p.home-about {
     font-size: clamp(1.1rem, 2vw, 1.4rem);
     padding: 0 var(--space-lg) 0 0;
   }
-
   #Work {
     padding-top: 0;
   }
-
   section div.work-showcase {
     padding: 2.5rem 0 2.5rem 0;
     gap: 1.2rem;
   }
-
   section div.work-showcase img {
     max-width: 26%;
     min-width: 230px;
-    align-content: last baseline;
   }
-
   section .accordion {
     padding: 1.5rem 0;
   }
-
   section .accordion div.project-subtitle div {
     font-size: 1rem;
     padding-right: var(--space-lg);
   }
-
   section .accordion div.project-title p {
     font-size: clamp(1.8rem, 4vw, 3.3rem);
-    font-family: var(--font-display);
-    font-weight: 400;
-    line-height: 1;
-    white-space: nowrap;
-    overflow: visible;
-    text-overflow: clip;
-    letter-spacing: -0.025em;
-    display: block;
-    width: 100%;
-    max-width: 100%;
-    min-width: 0;
-    text-align: left;
   }
-
   section div.panel div.grid {
     grid-template-columns: 1fr;
     gap: 1.5rem;
@@ -480,50 +418,38 @@ section.content div.info-contact ul {
     padding: 0 1.5rem 2.5rem 1.5rem;
     gap: 1.5rem;
   }
-
   .project-back-to-top {
     bottom: 2.5rem;
     right: 2.5rem;
     padding: 0.5rem 1rem;
     font-size: 1.1rem;
   }
-
   #Info {
     display: block;
     height: auto;
     min-height: auto;
     padding: 0 0 2rem 0;
   }
-
   .info-content {
     display: block;
     padding: 0;
     margin: 0;
     text-align: left;
   }
-
   section.content img {
     width: 100%;
     max-width: 100%;
     max-height: 69.5vh;
     padding-top: 2.5rem;
     height: auto;
-    aspect-ratio: auto;
-    display: block;
     object-fit: contain;
   }
-
   section.content div.info-contact {
     padding: 1rem 0 0 0;
   }
-
   section.content div.info-contact p {
     font-size: clamp(1.1rem, 1.8vw, 1.4rem);
     margin-bottom: 0.5rem;
-  }
-
-  section.content div.info-contact ul {
-    justify-content: space-between;
   }
 }
 
@@ -531,40 +457,32 @@ section.content div.info-contact ul {
   main {
     margin: 0 var(--space-lg) 2rem var(--space-lg);
   }
-
   main header {
     margin: 1.5rem 2.1rem 0.9rem 2.3rem;
   }
-
   main header ul {
     margin: 0;
     flex-direction: row;
     justify-content: space-between;
   }
-
   main header ul li {
     font-size: clamp(2rem, 6vw, 4rem);
   }
-
   main header ul li a.active {
     font-size: clamp(2.5rem, 7vw, 5rem);
   }
-
   main section p.home-about {
     font-size: clamp(1rem, 2.2vw, 1.3rem);
     padding: 0 var(--space-lg) 0 0;
     line-height: 1.33em;
   }
-
   section div.work-showcase {
     padding: 2rem 0 2.5rem 0;
   }
-
   section div.work-showcase img {
     max-width: 30%;
     min-width: 222px;
   }
-
   section .accordion {
     display: flex;
     justify-content: flex-start;
@@ -574,76 +492,47 @@ section.content div.info-contact ul {
     margin: 0;
     width: 100%;
   }
-
   section .accordion div.project-title {
     flex: 1 1 0%;
     min-width: 0;
     text-align: left;
   }
-
   section .accordion div.project-title p {
     font-size: clamp(1.7rem, 4.5vw, 2.35rem);
-    font-family: var(--font-display);
-    font-weight: 400;
-    line-height: 1;
-    white-space: nowrap;
-    overflow: visible;
-    text-overflow: clip;
-    letter-spacing: -0.02em;
     text-align: right;
-    display: block;
-    width: 100%;
-    max-width: 100%;
-    min-width: 0;
-    flex-shrink: 1;
-    margin: 0;
-    padding: 0;
   }
-
   #Info {
     height: auto;
     min-height: auto;
     padding: 2.5rem 0 0 0;
   }
-
   .info-content {
     display: block;
     text-align: left;
     padding: 0;
     margin: 0;
   }
-
   section.content img {
     max-width: 100%;
     max-height: 63.3vh;
     padding-top: 0;
     width: 100%;
     height: auto;
-    aspect-ratio: auto;
     object-fit: contain;
   }
-
   section.content div.info-contact {
     padding: 1.5em 0 0 0;
   }
-
   section.content div.info-contact p {
     font-size: clamp(1rem, 2vw, 1.2rem);
     text-align: left;
     line-height: 1.33em;
   }
-
-  section.content div.info-contact ul {
-    flex-direction: row;
-    justify-content: space-between;
-  }
-
   section .accordion div.project-subtitle {
     flex: 0 0 auto;
     display: flex;
     align-items: center;
   }
-
   section .accordion div.project-subtitle div:first-child {
     display: block;
     font-size: 1.8rem;
@@ -651,7 +540,6 @@ section.content div.info-contact ul {
     line-height: 1;
     transition: color 0.4s ease;
   }
-
   section .accordion div.project-subtitle div:first-child p {
     font-size: 1.8rem;
     font-family: var(--font-mono);
@@ -660,11 +548,9 @@ section.content div.info-contact ul {
     margin: 0;
     transition: color 0.4s ease;
   }
-
   section .accordion div.project-subtitle div:last-child {
     display: none;
   }
-
   section .accordion:hover div.project-subtitle div:first-child p {
     color: var(--bg);
   }
@@ -674,43 +560,35 @@ section.content div.info-contact ul {
   main {
     margin: 0 1.5rem;
   }
-
   main header {
     margin: 0;
   }
-
   main header ul {
     margin: 1.5rem;
     flex-direction: column;
     align-items: flex-start;
     gap: 0;
   }
-
   main header ul li {
     padding-bottom: 1.5rem;
     width: 100%;
     font-size: clamp(1.8rem, 5vw, 3rem);
   }
-
   main header ul li a.active {
     font-size: clamp(2rem, 5.5vw, 3.5rem);
   }
-
   main section p.home-about {
     font-size: 16px;
     padding: 0 1.5rem 0 0;
     bottom: 1.5rem;
   }
-
   #Work {
     padding-top: 1rem;
   }
-
   section div.work-showcase {
     padding: 0 1rem 1.5rem 1rem;
     gap: 0.75rem;
   }
-
   section div.work-showcase img {
     display: none;
     max-width: 40%;
@@ -718,137 +596,87 @@ section.content div.info-contact ul {
     overflow: visible;
     margin: 0 auto;
   }
-
   section div.work-showcase img.visible {
     display: block;
   }
-
   section .accordion {
     flex-direction: column;
     align-items: flex-start;
     padding: 1.5rem 0;
     gap: 1rem;
   }
-
   section .accordion div.project-subtitle,
   section .accordion div.project-subtitle div {
     display: none;
   }
-
   section .accordion div.project-title {
     width: 100%;
   }
-
   section .accordion div.project-title p {
     font-size: clamp(25px, 5.3vw, 32px);
-    font-family: var(--font-display);
-    font-weight: 400;
-    line-height: 1;
-    white-space: nowrap;
-    overflow: visible;
-    text-overflow: clip;
     text-align: center;
-    display: block;
-    width: 100%;
-    max-width: 100%;
-    min-width: 0;
-    margin: 0;
-    padding: 0;
   }
-
   section div.panel div.grid {
     grid-template-columns: 1fr;
     padding: 0 1rem 1rem 1rem;
     gap: 1rem;
   }
-
   section div.panel div.grid p {
     font-size: clamp(0.9rem, 2.5vw, 1.1rem);
   }
-
   section div.panel div.grid div.img-grid {
-    display: grid;
-    grid-template-columns: 1fr !important;
+    grid-template-columns: 1fr;
     gap: 1rem;
   }
-
   section div.panel div.grid div.img-grid .bottom-img {
-    grid-column: 1 !important;
-    width: 100%;
+    grid-column: 1;
   }
-
-  section div.panel div.grid div.img-grid img {
-    aspect-ratio: auto !important;
-    height: auto !important;
-    object-fit: contain;
-  }
-
   section div.panel div.img-grid-2 {
     max-width: 100%;
     margin: 0;
-    display: grid;
-    grid-template-columns: 1fr !important;
+    grid-template-columns: 1fr;
     padding: 0 1rem 1.5rem 1rem;
     gap: 1rem;
   }
-
   section div.panel div.img-grid-2 .img-flex {
     display: flex;
     flex-direction: column;
     gap: 1rem;
     width: 100%;
   }
-
-  section div.panel div.img-grid-2 > img,
-  section div.panel div.img-grid-2 img {
-    grid-column: 1 !important;
-    width: 100%;
-    height: auto !important;
-    aspect-ratio: auto !important;
-    object-fit: contain;
-    display: block;
-  }
-
   #Info {
     height: auto;
     min-height: auto;
     padding: 0.5rem 0 0.7rem 0;
   }
-
   .info-content {
     flex-direction: column;
     padding: 1rem 0;
     text-align: center;
     margin: 0;
   }
-
   section.content img {
     max-width: 100%;
     width: 100%;
     height: auto;
     max-height: clamp(401px, 60.13vh, 500px);
     object-fit: contain;
-    aspect-ratio: auto;
     padding-top: 0;
     margin: 0 auto;
   }
-
   section.content div.info-contact {
     padding: 1rem 0 0 0;
   }
-
   section.content div.info-contact p {
     font-size: clamp(0.9rem, 2.5vw, 1.1rem);
     line-height: 1.6;
     text-align: left;
   }
-
   section.content div.info-contact ul {
     display: flex;
     align-content: space-between;
     font-size: 1.2rem;
   }
-
   .project-back-to-top {
     bottom: 1.5rem;
     right: 1.5rem;
@@ -863,7 +691,6 @@ section.content div.info-contact ul {
     line-height: 1;
   }
 }
-
 @media (max-width: 480px) {
   @keyframes fontSwitch {
     0% {
@@ -892,15 +719,13 @@ section.content div.info-contact ul {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    min-height: 100vh;
+    min-height: 100dvh;
     padding: 85px 0 70px 0;
     margin-left: -2.5rem;
     margin-right: -2.5rem;
     width: calc(100% + 5rem);
     box-sizing: border-box;
-    overflow-x: hidden;
   }
-
   main section:first-of-type pre#canvas {
     width: fit-content;
     margin: 0 auto;
@@ -908,9 +733,7 @@ section.content div.info-contact ul {
     white-space: pre;
     line-height: 0.88;
     font-size: clamp(15px, 2.6vw, 18px);
-    overflow: visible;
   }
-
   main section:first-of-type p.home-about {
     position: absolute;
     bottom: 1.5rem;
@@ -929,31 +752,28 @@ section.content div.info-contact ul {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    min-height: 100vh;
+    min-height: 100dvh;
     padding-top: 95px;
     padding-bottom: 75px;
     box-sizing: border-box;
   }
-
   main section:first-of-type pre#canvas {
-    width: fit-content !important;
-    max-width: 96vw !important;
-    margin: 0 auto !important;
-    text-align: center !important;
-    white-space: pre !important;
-    line-height: 0.88 !important;
-    font-size: clamp(9px, 1.5vmin, 12.5px) !important;
-    overflow: visible !important;
+    width: fit-content;
+    max-width: 96vw;
+    margin: 0 auto;
+    text-align: center;
+    white-space: pre;
+    line-height: 0.88;
+    font-size: clamp(9px, 1.5vmin, 12.5px);
   }
-
   main section:first-of-type p.home-about {
-    position: absolute !important;
-    bottom: 2rem !important;
-    left: 2.5rem !important;
-    right: 2.5rem !important;
-    text-align: left !important;
-    margin: 0 !important;
-    padding: 0 !important;
-    z-index: 10 !important;
+    position: absolute;
+    bottom: 2rem;
+    left: 2.5rem;
+    right: 2.5rem;
+    text-align: left;
+    margin: 0;
+    padding: 0;
+    z-index: 10;
   }
 }
