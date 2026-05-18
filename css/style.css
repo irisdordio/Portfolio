@@ -631,6 +631,9 @@ section.content div.info-contact ul {
     gap: 1rem;
     width: 100%;
   }
+  section div.panel div.img-grid-2 > img {
+    grid-column: 1;
+  }
   #Info {
     height: auto;
     min-height: auto;
