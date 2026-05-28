@@ -326,6 +326,10 @@ section.content div.info-contact ul {
   justify-content: space-between;
 }
 
+section.content div.info-content ul a {
+  text-decoration: underline;
+}
+
 .project-back-to-top {
   position: fixed;
   bottom: 2.5rem;
